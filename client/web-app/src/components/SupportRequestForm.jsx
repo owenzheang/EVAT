@@ -143,21 +143,28 @@ export default function SupportRequestForm() {
   };
 
   return (
-    <div className="container vertical inner">
-      <h2 className="center">Submit a Request</h2>
+    <div className="mx-auto mt-4 w-full max-w-2xl rounded-lg border border-[#62d48c] bg-[#172235]/85 p-4 text-white shadow-xl backdrop-blur-sm sm:p-5 lg:p-6">
+      <h2 className="mb-5 text-center text-2xl font-bold sm:text-3xl lg:text-4xl">Submit a Request</h2>
       
-      <form onSubmit={handleValidation} className="form-section">
+      <form onSubmit={handleValidation} className="flex flex-col">
         {/* Submit Error and Success Messages */}
-        {error && <ErrorMessage error={error}/>}
-        {success && <SuccessMessage message={success}/>}
-        <div className="spacer-small">  </div>
+        {error && (
+          <div className="mb-3 rounded-lg border border-red-800 bg-red-100 p-2 text-red-900 [&_.validation]:gap-2">
+            <ErrorMessage error={error}/>
+          </div>
+        )}
+        {success && (
+          <div className="mb-3 rounded-lg border border-green-800 bg-green-100 p-2 text-green-900 [&_.validation]:gap-2">
+            <SuccessMessage message={success}/>
+          </div>
+        )}
         
         {/* Enter Name */}
-        <label className='form-label required'>Name</label>
-        <div className='icon-inside-input'>
-          <User className="input-icon" />
+        <label className="mb-2 font-medium after:text-red-400 after:content-['_*']">Name</label>
+        <div className="relative flex items-center">
+          <User className="pointer-events-none absolute left-3 size-5 text-black" />
           <input
-            className="input"
+            className="w-full rounded-lg border-2 border-white bg-[#d8d8d8] py-2 pr-3 pl-11 text-sm text-black transition placeholder:text-[#363636] hover:border-[#62d48c] focus:border-[#62d48c] focus:bg-white focus:outline-none"
             type="text"
             name="name"
             placeholder="Your Name"
@@ -165,16 +172,19 @@ export default function SupportRequestForm() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="spacer-small">  </div>
         {/* Name Error Message */}
-        {isNameEmpty && <ErrorMessage error='required'/>}
+        {isNameEmpty && (
+          <div className="mt-2 rounded-lg border border-red-800 bg-red-100 p-2 text-red-900 [&_.validation]:gap-2">
+            <ErrorMessage error='required'/>
+          </div>
+        )}
 
         {/* Enter Email */}
-        <label className='form-label required'>Email</label>
-        <div className='icon-inside-input'>
-          <Mail className="input-icon" />
+        <label className="mt-4 mb-2 font-medium after:text-red-400 after:content-['_*']">Email</label>
+        <div className="relative flex items-center">
+          <Mail className="pointer-events-none absolute left-3 size-5 text-black" />
           <input
-            className="input"
+            className="w-full rounded-lg border-2 border-white bg-[#d8d8d8] py-2 pr-3 pl-11 text-sm text-black transition placeholder:text-[#363636] hover:border-[#62d48c] focus:border-[#62d48c] focus:bg-white focus:outline-none"
             type="email"
             name="email"
             placeholder="Your Email"
@@ -183,13 +193,17 @@ export default function SupportRequestForm() {
             pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
           />
         </div>
-        <div className="spacer-small">  </div>
         {/* Email Error Message */}
-        {isEmailEmpty && <ErrorMessage error='required'/>}
+        {isEmailEmpty && (
+          <div className="mt-2 rounded-lg border border-red-800 bg-red-100 p-2 text-red-900 [&_.validation]:gap-2">
+            <ErrorMessage error='required'/>
+          </div>
+        )}
 
         {/* Enter Issue */}
-        <label className='form-label required'>Issue Type</label>
+        <label className="mt-4 mb-2 font-medium after:text-red-400 after:content-['_*']">Issue Type</label>
         <select
+          className="w-full rounded-lg border-2 border-white bg-[#d8d8d8] px-3 py-2 text-sm text-black transition hover:border-[#62d48c] focus:border-[#62d48c] focus:bg-white focus:outline-none"
           name="issue"
           value={issue}
           onChange={(e) => setIssue(e.target.value)}
@@ -200,27 +214,33 @@ export default function SupportRequestForm() {
           <option value="info">Incorrect Station Info</option>
           <option value="other">Other</option>
         </select>
-        <div className="spacer-small">  </div>
         {/* Issue Error Message */}
-        {isIssueEmpty && <ErrorMessage error='required'/>}
+        {isIssueEmpty && (
+          <div className="mt-2 rounded-lg border border-red-800 bg-red-100 p-2 text-red-900 [&_.validation]:gap-2">
+            <ErrorMessage error='required'/>
+          </div>
+        )}
 
         {/* Enter Description */}
-        <label className='form-label required'>Description of Issue</label>
+        <label className="mt-4 mb-2 font-medium after:text-red-400 after:content-['_*']">Description of Issue</label>
         <textarea
+          className="min-h-24 w-full resize-y rounded-lg border-2 border-white bg-[#d8d8d8] px-3 py-2 text-sm text-black transition placeholder:text-[#363636] hover:border-[#62d48c] focus:border-[#62d48c] focus:bg-white focus:outline-none"
           name="description"
           placeholder="Describe your issue..."
           rows={5}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <div className="spacer-small">  </div>
         {/* Description Error Message */}
-        {isDescriptionEmpty && <ErrorMessage error='required'/>}
+        {isDescriptionEmpty && (
+          <div className="mt-2 rounded-lg border border-red-800 bg-red-100 p-2 text-red-900 [&_.validation]:gap-2">
+            <ErrorMessage error='required'/>
+          </div>
+        )}
 
-        <div className="spacer-small" />
         <button 
           type="submit" 
-          className="btn btn-primary"
+          className="mt-5 w-full cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
           disabled={submitting}
         >
           {submitting ? "Submitting..." : "Submit Request"}
