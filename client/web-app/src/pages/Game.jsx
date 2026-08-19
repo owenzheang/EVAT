@@ -2,17 +2,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import profileImage from '../assets/game-car.png';
+import backgroundImage from '../assets/background.jpg';
 import ChatBubble from "../components/ChatBubble";
 
-import '../styles/Root.css';
 import '../styles/Buttons.css';
 import '../styles/Elements.css';
-import '../styles/Fonts.css';
-import '../styles/Forms.css';
 import '../styles/NavBar.css';
-import '../styles/Sidebar.css';
-import '../styles/Tables.css';
-import '../styles/Validation.css';
 
 function Game() {
   const navigate = useNavigate();
@@ -143,73 +138,77 @@ function Game() {
   };
 
   return (
-    <div>
+    <div className="relative isolate min-h-screen overflow-x-hidden bg-[#172235] text-white">
       <NavBar />
       {/* background */}
-      <div className="background-image" />
+      <div
+        className="fixed inset-0 -z-20 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      />
+      <div className="fixed inset-0 -z-10 bg-[#172235]/70" />
       {/* title */}
-      <h1 className='h1 text-center auto-width'>Rewards</h1>
-      <div className="container horizontal auto-width">
-        <div className="inner-left">
-          <h5>Character</h5>
+      <h1 className="px-4 py-4 text-center text-5xl font-bold sm:text-6xl lg:text-7xl">Rewards</h1>
+      <div className="mx-auto grid w-full max-w-[120rem] gap-8 rounded-lg border border-[#62d48c] bg-[#ffffff2a] p-4 shadow-lg backdrop-blur-sm sm:p-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+        <div className="flex flex-col items-center lg:items-start">
+          <h5 className="mb-4 text-2xl font-bold">Character</h5>
           <div>
-            <img src={profileImage} className="character-image" alt="Character Image"  />
+            <img src={profileImage} className="size-48 rounded-full object-cover sm:size-52" alt="Character Image"  />
           </div>
         </div>
-        <div className="inner-center">
+        <div className="flex min-w-0 flex-col items-center text-center">
           <div>
-            <button className="btn btn-primary uppercase" onClick={handleAppLogin}>
+            <button className="cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-5 py-3 text-lg font-semibold uppercase tracking-wide text-white shadow-sm transition hover:-translate-y-px hover:shadow-md" onClick={handleAppLogin}>
               App Login Check-In
             </button>
           </div>
 
-          <div className='spacer' />
-          <div>
-            <h5>Try Action-Based Rewards:</h5>
-            <div className='wrap-center'>
+          <div className="mt-8 w-full">
+            <h5 className="mb-5 text-2xl font-bold">Try Action-Based Rewards:</h5>
+            <div className="flex flex-wrap justify-center gap-2">
               <button 
-                className='btn btn-primary btn-small'
+                className="cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:shadow-md sm:text-base"
                 onClick={() => triggerGamificationAction("check_in")}
               >Check-In</button>
               <button 
-                className='btn btn-primary btn-small'
+                className="cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:shadow-md sm:text-base"
                 onClick={() => triggerGamificationAction("report_fault")}
               >Fault Report</button>
               <button 
-                className='btn btn-primary btn-small'
+                className="cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:shadow-md sm:text-base"
                 onClick={() => triggerGamificationAction("validate_ai_prediction")}
               >AI Validation</button>
               <button 
-                className='btn btn-primary btn-small'
+                className="cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:shadow-md sm:text-base"
                 onClick={() => triggerGamificationAction("discover_new_station_in_black_spot")}
               >Black Spot Discovery</button>
               <button 
-                className='btn btn-primary btn-small'
+                className="cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:shadow-md sm:text-base"
                 onClick={() => triggerGamificationAction("use_route_planner")}
               >Route Plan</button>
               <button 
-                className='btn btn-primary btn-small'
+                className="cursor-pointer rounded-lg border-0 bg-linear-to-r from-[#62d48c] via-[#62d48c] to-[#3f795b] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:shadow-md sm:text-base"
                 onClick={() => triggerGamificationAction("ask_chatbot_question")}
               >Chatbot Question</button>
             </div>
           </div>
 
-          <div className="spacer">  </div>
-          {loading ? (
-            <div className="message">Loading game profile...</div>
-          ) : error ? (
-            <p className="validation-error">{error}</p>
-          ) : gameProfile ? (
-            <div className="container vertical">
-              <p>🎯 <strong>Points:</strong> {gameProfile.gamification_profile?.points_balance}</p>
-              <p>🔥 <strong>Streak:</strong> {gameProfile.engagement_metrics?.current_app_login_streak} day(s)</p>
-              <p>🏆 <strong>Longest Streak:</strong> {gameProfile.engagement_metrics?.longest_app_login_streak} day(s)</p>
-              <p>📅 <strong>Last Login:</strong> {new Date(gameProfile.engagement_metrics?.last_login_date).toLocaleDateString()}</p>
-              {loginMessage && <p className="validation success font-bold">{loginMessage}</p>}
-            </div>
-          ) : (
-            <p>No game profile data.</p>
-          )}
+          <div className="mt-8 text-base sm:text-lg">
+            {loading ? (
+              <div className="rounded-lg border border-black bg-white px-4 py-2 text-black">Loading game profile...</div>
+            ) : error ? (
+              <p className="text-white">{error}</p>
+            ) : gameProfile ? (
+              <div className="flex flex-col gap-2 rounded-lg border border-[#62d48c] bg-white/10 p-4 text-left text-white">
+                <p>🎯 <strong>Points:</strong> {gameProfile.gamification_profile?.points_balance}</p>
+                <p>🔥 <strong>Streak:</strong> {gameProfile.engagement_metrics?.current_app_login_streak} day(s)</p>
+                <p>🏆 <strong>Longest Streak:</strong> {gameProfile.engagement_metrics?.longest_app_login_streak} day(s)</p>
+                <p>📅 <strong>Last Login:</strong> {new Date(gameProfile.engagement_metrics?.last_login_date).toLocaleDateString()}</p>
+                {loginMessage && <p className="rounded-lg border border-green-800 bg-green-100 p-2 text-center font-bold text-green-900">{loginMessage}</p>}
+              </div>
+            ) : (
+              <p className="text-white">No game profile data.</p>
+            )}
+          </div>
         </div>
       </div>
       <ChatBubble />
